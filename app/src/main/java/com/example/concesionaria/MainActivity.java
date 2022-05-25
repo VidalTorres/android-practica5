@@ -1,12 +1,15 @@
 package com.example.concesionaria;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btnCalcular;
     private Button btnLimpiar;
+    private Button btnCerrar;
 
     private TextView lblNumeroCotizacion;
     private TextView lblDescripcion;
@@ -42,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnCalcular = (Button) findViewById(R.id.btnCalcular);
         btnLimpiar = (Button) findViewById(R.id.btnLimpiar);
+        btnCerrar = (Button) findViewById(R.id.btnCerrar);
 
         lblNumeroCotizacion = (TextView) findViewById(R.id.lblNumeroCotizacion);
         lblDescripcion = (TextView) findViewById(R.id.lblDescripcion);
@@ -52,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         lblTotalFin = (TextView) findViewById(R.id.lblTotalFin);
         lblPagoMensual = (TextView) findViewById(R.id.lblPagoMensual);
 
-        Concesionaria concesionaria = new Concesionaria();
+        Cotizacion concesionaria = new Cotizacion();
 
         btnCalcular.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,40 +66,56 @@ public class MainActivity extends AppCompatActivity {
                 double pagoMensual;
                 double totalFin;
 
-                String numeroCotizacion = txtNumeroCotizacion.getText().toString();
-                concesionaria.setNumeroCotizacion(Integer.parseInt(numeroCotizacion));
+                if(txtNumeroCotizacion.getText().toString().matches("")){
+                    Toast.makeText(MainActivity.this,"Dalto faltante: Numero de Cotizacion",Toast.LENGTH_SHORT).show();
+                }
+                else if(txtDescripcion.getText().toString().matches("")){
+                    Toast.makeText(MainActivity.this,"Dalto faltante: Descripcion del automovil",Toast.LENGTH_SHORT).show();
+                }
+                else if(txtPrecio.getText().toString().matches("")){
+                    Toast.makeText(MainActivity.this,"Dalto faltante: Precio",Toast.LENGTH_SHORT).show();
+                }
+                else if(txtPorcentaje.getText().toString().matches("")){
+                    Toast.makeText(MainActivity.this,"Dalto faltante: Porcentaje",Toast.LENGTH_SHORT).show();
+                }
+                else if(txtPlazo.getText().toString().matches("")){
+                    Toast.makeText(MainActivity.this,"Dalto faltante: Plazo",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    String numeroCotizacion = txtNumeroCotizacion.getText().toString();
+                    concesionaria.setNumeroCotizacion(Integer.parseInt(numeroCotizacion));
 
-                String descripcion = txtDescripcion.getText().toString();
-                concesionaria.setDescripcionAuto(descripcion);
+                    String descripcion = txtDescripcion.getText().toString();
+                    concesionaria.setDescripcionAuto(descripcion);
 
-                String precio = txtPrecio.getText().toString();
-                concesionaria.setPrecio(Double.parseDouble(precio));
+                    String precio = txtPrecio.getText().toString();
+                    concesionaria.setPrecio(Double.parseDouble(precio));
 
-                String porcentaje = txtPorcentaje.getText().toString();
-                concesionaria.setPorcentajeInicial(Double.parseDouble(porcentaje));
+                    String porcentaje = txtPorcentaje.getText().toString();
+                    concesionaria.setPorcentajeInicial(Double.parseDouble(porcentaje));
 
-                String plazo = txtPlazo.getText().toString();
-                concesionaria.setPlazo(Integer.parseInt(plazo));
+                    String plazo = txtPlazo.getText().toString();
+                    concesionaria.setPlazo(Integer.parseInt(plazo));
 
-                pagoInicial = concesionaria.obtenerPagoInicial();
+                    pagoInicial = concesionaria.obtenerPagoInicial();
 
-                totalFin = concesionaria.obtenerTotalFin();
+                    totalFin = concesionaria.obtenerTotalFin();
 
-                pagoMensual = concesionaria.obtenerPagoMensual();
+                    pagoMensual = concesionaria.obtenerPagoMensual();
 
 
-                //Mostrar datos
+                    //Mostrar datos
 
-                lblNumeroCotizacion.setText("# "+ concesionaria.getNumeroCotizacion());
-                lblDescripcion.setText("Descripción del automovil: "+concesionaria.getDescripcionAuto());
-                lblPrecio.setText("Precio del auto: "+ concesionaria.getPrecio());
-                lblPorcentaje.setText("Porcentaje: " +concesionaria.getPorcentajeInicial()+"%");
-                lblPlazo.setText("Plazo: "+ concesionaria.getPlazo());
+                    lblNumeroCotizacion.setText("# "+ concesionaria.getNumeroCotizacion());
+                    lblDescripcion.setText("Descripción del automovil: "+concesionaria.getDescripcionAuto());
+                    lblPrecio.setText("Precio del auto: "+ concesionaria.getPrecio());
+                    lblPorcentaje.setText("Porcentaje: " +concesionaria.getPorcentajeInicial()+"%");
+                    lblPlazo.setText("Plazo: "+ concesionaria.getPlazo());
 
-                lblPagoInicial.setText("Pago incial: "+pagoInicial);
-                lblPagoMensual.setText("Pago mensual "+pagoMensual);
-                lblTotalFin.setText("Total a financiar: "+totalFin);
-
+                    lblPagoInicial.setText("Pago incial: "+pagoInicial);
+                    lblPagoMensual.setText("Pago mensual "+pagoMensual);
+                    lblTotalFin.setText("Total a financiar: "+totalFin);
+                }
             }
         });
 
@@ -117,6 +138,27 @@ public class MainActivity extends AppCompatActivity {
                 txtPorcentaje.setText("");
                 txtPlazo.setText("");
 
+            }
+        });
+
+        btnCerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder confirmar = new AlertDialog.Builder(MainActivity.this);
+                confirmar.setTitle("¿Cerrar APP?");
+                confirmar.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+                confirmar.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                confirmar.show();
             }
         });
 

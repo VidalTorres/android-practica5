@@ -25,7 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:hint="Numero de Cotización">
+            android:hint="Numero de Cotización"
+            android:inputType="number">
         </EditText>
 
         <EditText
@@ -41,7 +42,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:hint="Precio">
+            android:hint="Precio"
+            android:inputType="number">
         </EditText>
 
         <EditText
@@ -49,7 +51,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:hint="Porcentaje de pago">
+            android:hint="Porcentaje de pago"
+            android:inputType="number">
         </EditText>
 
         <EditText
@@ -57,7 +60,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:hint="Plazo">
+            android:hint="Plazo"
+            android:inputType="number">
         </EditText>
 
         <!-- botones -->
@@ -78,6 +82,13 @@
             android:gravity="center">
         </Button>
 
+        <Button
+            android:id="@+id/btnCerrar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cerrar"
+            android:gravity="center">
+        </Button>
         <!-- Mostrar info -->
 
         <TextView

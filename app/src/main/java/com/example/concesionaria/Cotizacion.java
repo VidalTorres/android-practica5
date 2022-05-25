@@ -1,6 +1,6 @@
 package com.example.concesionaria;
 
-public class Concesionaria {
+public class Cotizacion {
     //Variables
     private int numeroCotizacion;
     private String descripcionAuto;
@@ -8,12 +8,8 @@ public class Concesionaria {
     private double porcentajeInicial;
     private int plazo;
 
-    private double pagoInicial;
-    private double totalFin;
-    private double pagoMensual;
-
     //Constructores
-    Concesionaria(){
+    Cotizacion(){
         this.numeroCotizacion = 0;
         this.descripcionAuto = "";
         this.precio = 0.0;
@@ -21,7 +17,7 @@ public class Concesionaria {
         this.plazo = 0;
     }
 
-    Concesionaria(int numeroCotizacion, String descripcionAuto, double precio, double porcentajeInicial, int plazo){
+    Cotizacion(int numeroCotizacion, String descripcionAuto, double precio, double porcentajeInicial, int plazo){
         this.numeroCotizacion = numeroCotizacion;
         this.descripcionAuto = descripcionAuto;
         this.precio = precio;
@@ -29,7 +25,7 @@ public class Concesionaria {
         this.plazo = plazo;
     }
 
-    Concesionaria(Concesionaria cotizacion){
+    Cotizacion(Cotizacion cotizacion){
         this.numeroCotizacion = cotizacion.numeroCotizacion;
         this.descripcionAuto = cotizacion.descripcionAuto;
         this.precio = cotizacion.precio;
@@ -110,20 +106,23 @@ public class Concesionaria {
         this.plazo = plazo;
     }
 
-    //funciones
+    //Funciones
 
     public double obtenerPagoInicial(){
+        double pagoInicial;
         pagoInicial = precio * (porcentajeInicial/100);
         return  pagoInicial;
     }
 
     public double obtenerTotalFin(){
-        totalFin = precio - pagoInicial;
+        double totalFin;
+        totalFin = precio - obtenerPagoInicial();
         return totalFin;
     }
 
     public double obtenerPagoMensual(){
-        pagoMensual = totalFin/plazo;
+        double pagoMensual;
+        pagoMensual = obtenerTotalFin()/plazo;
         return pagoMensual;
     }
 
